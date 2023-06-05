@@ -1,0 +1,4 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}Confirm YOur Sign Up at Davron.com{% endblocktrans %}
+{% endautoescape %}
