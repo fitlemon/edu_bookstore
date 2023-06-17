@@ -9,6 +9,8 @@ services:
     # - 8000
     volumes:
       - .:/home/app/web
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
 
     ports:
       - 8000:8000
@@ -32,5 +34,7 @@ services:
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:
 
 

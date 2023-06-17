@@ -1,7 +1,7 @@
 from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models.query import QuerySet
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 
 from .models import Book
 from django.db.models import Q
@@ -22,6 +22,19 @@ class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     permission_required = "books.special_status"
     queryset = Book.objects.all().prefetch_related(
         "reviews__author",
+    )
+
+
+class BookEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Book
+    context_object_name = "book"
+    template_name = "books/book_edit.html"
+    login_url = "account_login"
+    permission_required = "books.special_status"
+    fields = (
+        "author",
+        "price",
+        "title",
     )
 
 
