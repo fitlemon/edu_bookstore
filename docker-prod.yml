@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    #command: python /home/app/web/manage.py runserver 0.0.0.0:8000
+    command: gunicorn django_project.wsgi -b 0.0.0.0:8000 # new
+    #expose:
+    # - 8000
+    volumes:
+      - .:/home/app/web
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+
+    ports:
+      - 8000:8000
+    
+    environment:
+      - "DJANGO_SECRET_KEY=z+jjwn$$1%(&ofocgd)xo3+oe3&tuic8zr7!81qt1zsh3wduvfn"
+      - "PSQL_HOST=172.17.0.1"
+      - "PSQL_PASSWORD=1"
+      - "DJANGO_SECURE_SSL_REDIRECT=False"
+    
+    
+    
+  
+  nginx:
+    build: ./nginx
+    volumes:
+      
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - "1337:80"
+    depends_on:
+      - web
+
+volumes:
+ 
+  static_volume:
+  media_volume:
+
+
