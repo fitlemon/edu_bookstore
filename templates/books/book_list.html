@@ -3,9 +3,25 @@
 {% block title %}Books{% endblock title %}
 
 {% block content %}
-{% for book in book_list %}
-<div>
-    <h2><a href="{{ book.get_absolute_url}}">{{ book.title}}</a></h2>
+<div class="container-search">
+    <form class="d-flex" action="{% url 'search_results' %}" method="get">
+        <input class="form-control me-2" type="search" name="q" placeholder="Search Books" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
 </div>
-{% endfor %}
+<div class="grid-container">
+
+    {% for book in book_list %}
+    <div class="grid-item">
+        {% if book.cover %}
+        <a href="{{ book.get_absolute_url}}"><img class="bookcover" src="{{ book.cover.url }}"></a>
+        {% endif %}
+        <p>{{ book.title}}</p>
+    </div>
+
+    {% endfor %}
+</div>
+<div>
+    <a href="{% url 'book_new' %}">+Add New Book</a>
+</div>
 {% endblock content %}
