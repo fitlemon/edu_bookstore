@@ -3,18 +3,37 @@
 {% block title%}{{book.title}}{% endblock title %}
 
 {% block content %}
-<div class="book-detail">
-    {% if book.cover %}
-    <img class="bookcover" src="{{ book.cover.url}}" alt="{{book.title}}">
-    {% endif %}
-    <h2><a href="">{{book.title}}</a></h2>
-    <p>Author: {{ book.author}}</p>
-    <p>Price: {{book.price}}</p>
-    {% if book.file %}
-    <a class="btn btn-outline-secondary" href="{{ book.file.url }}" target="_blank">Open</a>
-    <a class="btn btn-outline-success" href="{{ book.file.url }}">Download</a>
-    {% endif %}
-    <div>
+<div class="book_detail-grid-container">
+    <div class="book_detail-grid-item">
+        {% if book.cover %}
+        <img class="bookcover" src="{{ book.cover.url}}" alt="{{book.title}}">
+        {% endif %}
+        <h2><a href="">{{book.title}}</a></h2>
+        <p>Author: {{ book.author}}</p>
+        <p>Price: {{book.price}}</p>
+        {% if book.file %}
+        <a class="btn btn-outline-secondary" href="{{ book.file.url }}" target="_blank">Open</a>
+        <a class="btn btn-outline-success" href="{{ book.file.url }}">Download</a>
+        {% endif %}
+        {% if user.is_authenticated%}
+        <a class="btn btn-outline-info" href="{% url 'book_edit' book.pk %}">Edit Book</a>
+        <button class="btn btn-outline-danger" onclick="openConfirmationModal_book();">Delete Book</button>
+        {% endif %}
+        <div id="confirmation-modal-book" class="modal">
+            <div class="modal-content">
+                <h2>Confirm Deletion</h2>
+                <p>Are you sure you want to delete this book?</p>
+                <form action="{% url 'book_delete' book.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
+                    <button type="button" onclick="closeConfirmationModal_book();"
+                        class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="book_detail-grid-item">
+
         <h3>Reviews</h3>
         <ul>
             {% for review in book.reviews.all %}
@@ -27,7 +46,7 @@
                 </div>
                 <div class="card-footer">
                     {% if user.is_authenticated and user == review.author %}
-                    <button class="btn btn-danger" onclick="openConfirmationModal({{ review.pk }})">Delete</button>
+                    <button class="btn btn-danger" onclick="openConfirmationModal()">Delete</button>
                     {% endif %}
                     <div id="confirmation-modal" class="modal">
                         <div class="modal-content">
@@ -52,22 +71,28 @@
             {{ form|crispy}}
             <button type="submit" class="btn btn-success ml-2">Save</button>
         </form>
+
     </div>
-    <p><a href="{% url 'book_edit' book.pk %}">Edit Book</a></p>
-    <p><a href="{% url 'book_delete' book.pk %}">Delete Book</a></p>
+
 
 </div>
-
-
 
 <script>
     function openConfirmationModal(reviewPk) {
         const modal = document.getElementById('confirmation-modal');
         modal.style.display = 'block';
     }
-
+    function openConfirmationModal_book(bookPk) {
+        const modal = document.getElementById('confirmation-modal-book');
+        modal.style.display = 'block';
+    }
     function closeConfirmationModal() {
         const modal = document.getElementById('confirmation-modal');
+        modal.style.display = 'none';
+    }
+
+    function closeConfirmationModal_book() {
+        const modal = document.getElementById('confirmation-modal-book');
         modal.style.display = 'none';
     }
 </script>

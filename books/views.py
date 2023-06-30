@@ -136,3 +136,15 @@ def delete_review(request, review_pk):
         review.delete()
 
     return redirect("book_detail", pk=review.book.pk)
+
+
+# FBV for delete book
+
+
+def delete_book(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+
+    if request.method == "POST":
+        book.delete()
+
+    return redirect("book_list")

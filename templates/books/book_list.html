@@ -12,16 +12,19 @@
 <div class="grid-container">
 
     {% for book in book_list %}
-    <div class="grid-item">
-        {% if book.cover %}
-        <a href="{{ book.get_absolute_url}}"><img class="bookcover" src="{{ book.cover.url }}"></a>
-        {% endif %}
-        <p>{{ book.title}}</p>
-    </div>
+    <a href="{{ book.get_absolute_url}}">
+        <div class="grid-item">
+            {% if book.cover %}
+            <img class="bookcover" src="{{ book.cover.url }}">
+
+            {% endif %}
+            <p>{{ book.title}}</p>
+        </div>
+    </a>
 
     {% endfor %}
 </div>
-<div>
-    <a href="{% url 'book_new' %}">+Add New Book</a>
+<div style="text-align: center;">
+    <a href="{% url 'book_new' %}" class="btn btn-outline-secondary">+Add New Book</a>
 </div>
 {% endblock content %}

@@ -25,6 +25,11 @@ img.bookcover {
 
 }
 
+.book_detail-grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 .book-detail {
     text-align: center;
 }
