@@ -95,7 +95,7 @@ class BookEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     # def form_valid(self, form):
     #     form = BookEditForm(request.POST, request.FILES)
     #     return super().form_valid(form)
-    fields = ("author", "price", "title", "cover", "file")
+    fields = ("author", "price", "title", "cover", "file", "description")
 
 
 class SearchResultsListView(ListView):
@@ -115,7 +115,7 @@ class BookAddView(LoginRequiredMixin, CreateView):
     context_object_name = "book"
     template_name = "books/book_new.html"
     login_url = "account_login"
-    fields = ("author", "price", "title", "cover", "file")
+    fields = ("author", "price", "title", "cover", "file", "description")
 
 
 class BookDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):

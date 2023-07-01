@@ -27,7 +27,7 @@ img.bookcover {
 
 .book_detail-grid-container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
 }
 
 .book-detail {
