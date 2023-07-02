@@ -38,7 +38,13 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
 ]
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "ec2-16-170-161-252.eu-north-1.compute.amazonaws.com",
+    "16.170.161.252",
+    "http://ec2-16-170-161-252.eu-north-1.compute.amazonaws.com:1337",
+    "16.170.161.252:1337",
+    "http://localhost:1337",
+]
 # Application definition
 
 INSTALLED_APPS = [
