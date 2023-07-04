@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 {% load crispy_forms_tags %}
 {% block title%}{{book.title}}{% endblock title %}
-
+{% load auth_extras %}
 {% block content %}
 <div class="book_detail-grid-container">
     <div class="book_detail-grid-item">
@@ -16,7 +16,7 @@
         <a class="btn btn-outline-secondary" href="{{ book.file.url }}" target="_blank">Open</a>
         <a class="btn btn-outline-success" href="{{ book.file.url }}">Download</a>
         {% endif %}
-        {% if user.is_authenticated%}
+        {% if user.is_authenticated and user|has_group:"Admins" %}
         <a class="btn btn-outline-info" href="{% url 'book_edit' book.pk %}">Edit Book</a>
         <button class="btn btn-outline-danger" onclick="openConfirmationModal_book();">Delete Book</button>
         {% endif %}
